@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockerprac
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dockerprac
+  template:
+    metadata:
+      labels:
+        app: dockerprac
+    spec:
+      containers:
+      - name: dockerprac
+        image: jackattack123/dockerprac
+        ports: 
+          - containerPort: 3000
+
+
+
+
+
+
