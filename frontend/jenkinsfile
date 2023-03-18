@@ -1,0 +1,38 @@
+pipeline {
+    agent {
+        kubernetes {
+            label 'k8s-agent'
+            yamlFile 'k8s-pod.yaml'
+        }
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('jackattack123/dockerprac:latest')
+                }
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', 'your-docker-credentials-id') {
+                        docker.image('jackattack123/dockerprac:latest').push()
+                    }
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                withCredentials([file(credentialsId: '1', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl apply -f k8s-deployment.yaml --kubeconfig $KUBECONFIG'
+                }
+            }
+        }
+    }
+}
