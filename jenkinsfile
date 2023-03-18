@@ -6,6 +6,13 @@ pipeline {
         }
     }
     stages {
+        stage ('hello AWS') {
+            steps {
+                withAWS(credentialsId: "${env.aws-credentials-id}", region: 'us-east-2') {
+                    sh 'aws s3 ls'
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm
