@@ -1,12 +1,11 @@
 pipeline {
     agent {
         kubernetes {
-            label 'k8s-agent'
             yamlFile 'kubernetes/k8s-pod.yaml'
         }
     }
     stages {
-        stage ('AWS auth') {
+        stage ('AWS auth and check') {
             steps {
                 script {
                     // Set your AWS cluster name and region
