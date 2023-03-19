@@ -6,6 +6,6 @@ metadata:
     app: jenkins-agent
 spec:
   containers:
-  - name: jnlp
+  - name: dockerprac
     image: jackattack123/dockerprac
     
