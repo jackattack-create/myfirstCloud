@@ -1,9 +1,6 @@
 pipeline {
     agent {
-        kubernetes {
-            label 'k8s-agent'
-            yamlFile 'kubernetes/k8s-pod.yaml'
-        }
+        any
     }
     stages {
         stage ('AWS auth') {
