@@ -12,27 +12,26 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout the source code from your GitHub repo
-                git branch: 'master', url: 'https://github.com/jackattack-create/myfirstCloud.git'
+                git branch: 'main', url: 'https://github.com/jackattack-create/myfirstCloud.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Get the git commit hash to use as a tag for the Docker image
+    
                     def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
                     def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}")
 
-                    // Log in to Docker Hub
+               
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
-                        // Push the image to Docker Hub
+
                         image.push()
-                        // Optionally, push the 'latest' tag as well
+
                         image.push('latest')
                     }
                 }
             }
         }
     }
-}
 }
