@@ -1,6 +1,8 @@
 pipeline {
     agent {
-        any
+        docker {
+            image 'jackattack123/dockerprac'
+        }
     }
     environment {
         // Set your Docker Hub credentials ID and repository name
