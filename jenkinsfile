@@ -2,10 +2,11 @@ pipeline {
     agent {
         docker {
             image 'jackattack123/dockerprac'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     environment {
-        // Set your Docker Hub credentials ID and repository name
+        
         DOCKER_HUB_CREDENTIALS_ID = '7'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
     }
@@ -13,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from your GitHub repo
+                
                 git branch: 'main', url: 'https://github.com/jackattack-create/myfirstCloud.git'
             }
         }
