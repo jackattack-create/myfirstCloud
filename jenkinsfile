@@ -22,27 +22,27 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
     
                     
-                    def image = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}", "-f docker/Dockerfile .")
+        //             def image = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}", "-f docker/Dockerfile .")
 
                
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
-                        docker.image("${DOCKER_HUB_REPO}:${IMAGE_TAG}").push()
-                    }
-                }
-            }
-        }
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
+        //                 docker.image("${DOCKER_HUB_REPO}:${IMAGE_TAG}").push()
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
