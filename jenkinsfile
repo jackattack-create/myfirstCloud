@@ -27,12 +27,18 @@ pipeline {
                     
                     def image = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}", "-f docker/Dockerfile .")
 
-               
+                    image.inside {
+                        sh 'docker images'
+                    }
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
-
-                        image.push()
-
-                        image.push('latest')
+                        docker.image("${DOCKER_HUB_REPO}:${IMAGE_TAG}").push()
                     }
                 }
             }
