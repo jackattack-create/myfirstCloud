@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'jackattack123/dockerprac'
+            image 'jackattack123/dockerprac:latest'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
