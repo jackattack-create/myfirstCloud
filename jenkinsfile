@@ -9,6 +9,7 @@ pipeline {
     environment {       
         DOCKER_HUB_CREDENTIALS_ID = '7'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
+        IMAGE_TAG = 'latest'
     }
 
     stages {
@@ -23,8 +24,8 @@ pipeline {
             steps {
                 script {
     
-                    def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                    def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}", "-f docker/Dockerfile .")
+                    
+                    def image = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}", "-f docker/Dockerfile .")
 
                
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
