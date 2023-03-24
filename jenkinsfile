@@ -24,7 +24,7 @@ pipeline {
                 script {
     
                     def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                    def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}", "-f docker/DockerFile")
+                    def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}", "-f docker/Dockerfile .")
 
                
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
