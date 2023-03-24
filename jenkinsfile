@@ -4,7 +4,7 @@ pipeline {
         //     image 'jackattack123/dockerprac:latest'
         //     args '-v /var/run/docker.sock:/var/run/docker.sock'
         // }
-        Dockerfile true
+        dockerfile true
     }
 
     environment {       
