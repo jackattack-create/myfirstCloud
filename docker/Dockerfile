@@ -1,7 +1,7 @@
 FROM node
-WORKDIR /app
-COPY package.json /app
+WORKDIR /app 
+COPY dockerprac/package.json ./
 RUN npm install
-COPY . /app
+COPY . /dockerprac
 EXPOSE 3000
 CMD ["npm", "run", "start"]

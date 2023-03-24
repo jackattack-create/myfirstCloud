@@ -5,8 +5,8 @@ pipeline {
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
-    environment {
-        
+
+    environment {       
         DOCKER_HUB_CREDENTIALS_ID = '7'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
     }
@@ -24,7 +24,7 @@ pipeline {
                 script {
     
                     def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                    def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}")
+                    def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}", "-f docker/DockerFile")
 
                
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
