@@ -6,7 +6,7 @@ pipeline {
         // }
         dockerfile {
             filename 'docker/Dockerfile'
-            dir 'docker'
+            dir '.'
             additionalBuildArgs '--build-arg http_proxy=http://proxy.iiit.ac.in:8080 --build-arg https_proxy=http://proxy.iiit.ac.in:8080'
         }
     }
