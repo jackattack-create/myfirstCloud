@@ -1,7 +1,9 @@
 pipeline {
     agent {
-        docker {
-            image 'jackattack123/dockerprac'
+        dockerfile {
+            filename 'docker/Dockerfile'
+            dir '.'
+            // additionalBuildArgs '--build-arg http_proxy=http://proxy.iiit.ac.in:8080 --build-arg https_proxy=http://proxy.iiit.ac.in:8080'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
