@@ -1,7 +1,7 @@
 FROM node
 
 # Set up the Jenkins agent working directory
-ARG AGENT_WORK_DIR=/app/agent
+ARG AGENT_WORK_DIR=../agent
 ENV HOME ${AGENT_WORK_DIR}
 
 # Install Jenkins agent dependencies
