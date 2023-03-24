@@ -1,7 +1,10 @@
 pipeline {
-    agent any
-
-    
+    agent {
+        docker {
+            image 'jackattack123/dockerprac'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {       
         DOCKER_HUB_CREDENTIALS_ID = '7'
@@ -18,40 +21,19 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            agent {
-                // docker {
-                //     image 'jackattack123/dockerprac:latest'
-                //     args '-v /var/run/docker.sock:/var/run/docker.sock'
-                // }
-                dockerfile {
-                    filename 'docker/Dockerfile.agent'
-                    dir '.'
-                    // additionalBuildArgs '--build-arg http_proxy=http://proxy.iiit.ac.in:8080 --build-arg https_proxy=http://proxy.iiit.ac.in:8080'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
     
                     
                     def image = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}", "-f docker/Dockerfile .")
 
-                    image.inside {
-                        sh 'docker images'
-                    }
+               
+                    
                 }
             }
         }
 
         stage('Push to Docker Hub') {
-            agent {
-                dockerfile {
-                    filename 'docker/Dockerfile'
-                    dir '.'
-                    // additionalBuildArgs '--build-arg http_proxy=http://proxy.iiit.ac.in:8080 --build-arg https_proxy=http://proxy.iiit.ac.in:8080'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
