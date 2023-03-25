@@ -23,6 +23,11 @@ pipeline {
                     git branch: 'main', url: 'https://github.com/jackattack-create/myfirstCloud.git'
                 }
             }
+            stage('Build') {
+                steps {
+                    sh 'docker build -t myfirstcloud .'
+                }
+            }
 
             stage('Build Docker Image') {
                 steps {
