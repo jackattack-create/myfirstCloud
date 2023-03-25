@@ -1,24 +1,5 @@
-FROM docker:dind
 
-# Install Node.js
-RUN apk add --update nodejs npm
-
-# Set up the Jenkins agent working directory
-ENV AGENT_WORK_DIR /app/agent
-
-# Install Jenkins agent dependencies
-# Set up the Jenkins user and working directory
-RUN addgroup -g 1000 jenkins && \
-    adduser -D -u 1000 -G jenkins -h $HOME jenkins && \
-    mkdir -p ${AGENT_WORK_DIR} && \
-    chown -R jenkins:jenkins ${AGENT_WORK_DIR} && \
-    chmod 775 ${AGENT_WORK_DIR}
-
-
-USER jenkins
-
-
-
+FROM node
 
 WORKDIR /app/dockerprac 
 COPY dockerprac/package.json ./

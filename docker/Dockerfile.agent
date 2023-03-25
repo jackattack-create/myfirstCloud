@@ -1,16 +1,18 @@
-# Use the official Jenkins agent image as the base image
-FROM jenkins/agent:latest
+FROM docker:dind
 
-# Switch to the root user to install packages
-USER root
+# Install Node.js
+RUN apk add --update nodejs npm
 
-# Install Docker
-RUN apt-get update && \
-    apt-get install -y apt-transport-https ca-certificates curl software-properties-common && \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
-    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
-    apt-get update && \
-    apt-get install -y docker-ce docker-ce-cli containerd.io
+# Set up the Jenkins agent working directory
+ENV AGENT_WORK_DIR /app/agent
 
-# Switch back to the jenkins user
+# Install Jenkins agent dependencies
+# Set up the Jenkins user and working directory
+RUN addgroup -g 1000 jenkins && \
+    adduser -D -u 1000 -G jenkins -h $HOME jenkins && \
+    mkdir -p ${AGENT_WORK_DIR} && \
+    chown -R jenkins:jenkins ${AGENT_WORK_DIR} && \
+    chmod 775 ${AGENT_WORK_DIR}
+
+
 USER jenkins
