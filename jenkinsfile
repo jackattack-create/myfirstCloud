@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'jackattack123/dockerprac'
+            image 'dockerprac/latest'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -9,6 +9,7 @@ pipeline {
     environment {       
         DOCKER_HUB_CREDENTIALS_ID = 'dockerCred2'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
+        IMAGE_TAG = 'latest'
     }
 
     stages {
@@ -26,13 +27,12 @@ pipeline {
                     script {
         
                         def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                        def image = docker.build("${DOCKER_HUB_REPO}:latest")
+                        def image = docker.build("${DOCKER_HUB_REPO}:${IMAGE_TAG}", "--build-arg GIT_COMMIT_HASH=${gitCommitHash} .}")
 
                 
                         docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
-
-                            image.push()
-                            image.push('latest')
+                            sh "docker build -t ${DOCKER_HUB_REPO}:${IMAGE_TAG} ."
+                            docker.image("${DOCKER_HUB_REPO}:${IMAGE_TAG}").push()
 
                         }
                     }
