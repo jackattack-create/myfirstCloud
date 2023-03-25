@@ -10,6 +10,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS_ID = 'dockerCred2'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
         IMAGE_TAG = 'latest'
+        PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin/docker"
     }
 
     stages {
