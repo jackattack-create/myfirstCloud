@@ -12,26 +12,29 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                
-                git branch: 'main', url: 'https://github.com/jackattack-create/myfirstCloud.git'
+        node {
+
+            stage('Checkout') {
+                steps {
+                    
+                    git branch: 'main', url: 'https://github.com/jackattack-create/myfirstCloud.git'
+                }
             }
-        }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-    
-                    def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
-                    def image = docker.build("${DOCKER_HUB_REPO}:${gitCommitHash}")
+            stage('Build Docker Image') {
+                steps {
+                    script {
+        
+                        def gitCommitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+                        def image = docker.build("${DOCKER_HUB_REPO}:latest")
 
-               
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
+                
+                        docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
 
-                        image.push()
-                        image.push('latest')
+                            image.push()
+                            image.push('latest')
 
+                        }
                     }
                 }
             }
