@@ -31,7 +31,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y docker-ce docker-ce-cli containerd.io
 
-WORKDIR /dockerprac 
+WORKDIR /app/dockerprac 
 COPY dockerprac/package.json ./
 RUN npm install
 COPY . /dockerprac

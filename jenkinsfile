@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {       
-        DOCKER_HUB_CREDENTIALS_ID = '7'
+        DOCKER_HUB_CREDENTIALS_ID = 'dockerCred2'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
     }
 
@@ -30,8 +30,8 @@ pipeline {
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_HUB_CREDENTIALS_ID) {
 
                         image.push()
-
                         image.push('latest')
+
                     }
                 }
             }
