@@ -1,15 +1,14 @@
 pipeline {
     agent {
         dockerfile {
-            filename 'docker/Dockerfile.agent'
-            additionalBuildArgs '--build-arg AGENT_WORK_DIR=${WORKSPACE}'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            true
         }
     }
 
     environment {       
         DOCKER_HUB_CREDENTIALS_ID = 'dockerCred2'
         DOCKER_HUB_REPO = 'jackattack123/dockerprac'
+        IMAGE_NAME = 'dockerprac'
         IMAGE_TAG = 'latest'
         PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/bin/docker"
     }
@@ -19,13 +18,13 @@ pipeline {
 
             stage('Checkout') {
                 steps {
-                    
                     git branch: 'main', url: 'https://github.com/jackattack-create/myfirstCloud.git'
+                    checkout scm
                 }
             }
             stage('Build') {
                 steps {
-                    sh 'docker build -t myfirstcloud .'
+                    def dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
                 }
             }
 
