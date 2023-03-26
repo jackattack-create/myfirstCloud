@@ -2,8 +2,8 @@ pipeline {
     agent {
         dockerfile {
             filename 'docker/Dockerfile.agent'
-            additionalBuildArgs '--build-arg AGENT_WORK_DIR=${WORKSPACE}'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            // additionalBuildArgs '--build-arg AGENT_WORK_DIR=${WORKSPACE}'
+            // args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
 
